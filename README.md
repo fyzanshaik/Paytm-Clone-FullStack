@@ -45,7 +45,11 @@ To run this project locally, follow these steps:
 4. Configure environment variables:
    - Create a `.env` file in the `backend` directory.
    - Add necessary environment variables such as MongoDB connection URI, JWT secret, etc.
-
+Example : 
+```
+MONGODB_URL = "your-url"
+PORT = 3000
+```
 5. Start the backend server:
    ```
         cd backend
