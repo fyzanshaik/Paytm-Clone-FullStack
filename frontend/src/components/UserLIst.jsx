@@ -48,7 +48,7 @@ const UserList = () => {
             />
             <div className="">
                 {filteredUsers.map((user, id) => (
-                    <UserBox key={id} userName={user.userName} id={id} />
+                    <UserBox key={id} userName={user.userName} _id={user._id} firstName={user.firstName} lastName={user.lastName} id={id} />
                 ))}
             </div>
         </div>

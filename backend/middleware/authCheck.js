@@ -5,21 +5,21 @@ const User = require("../models/User");
 const authMiddleware = async (req, res, next) => {
   // console.log(" AUTH HIT")
   const authHeader = req.headers.authorization;
+  // console.log(req.headers)
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
   const token = authHeader.split(" ")[1];
-  // console.log(token)
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    // console.log(decoded)
     const user = await User.findOne({ userName: decoded.userId });
 
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
     req.userId = decoded.userId;
+    console.log("Auth cleared")
     next();
   } catch (err) {
     console.error("Authorization failed:", err);

@@ -3,10 +3,11 @@ import Balance from '../components/Balance'
 import UserList from '../components/UserLIst'
 import { useEffect, useState } from 'react';
 import axios from 'axios'
-
+import { useNavigate } from 'react-router-dom';
 function Dashboard() {
     const [userName, setUsername] = useState("User");
     const [balance, setBalance] = useState(0);
+    const navigate = useNavigate()
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
@@ -37,6 +38,7 @@ function Dashboard() {
                 .catch(err=>console.log(err))
         } else {
             console.error("Token not found in localStorage");
+            navigate('/signup')
         }
     })
 

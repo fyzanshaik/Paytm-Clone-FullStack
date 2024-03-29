@@ -6,6 +6,6 @@ const authCheck = require("../middleware/authCheck");
 const accountController = require("../controllers/accountController");
 
 router.get("/balance", authCheck, accountController.getAccountBalance);
-router.get("/transfer", authCheck, accountController.accountBalanceTransfer);
+router.post("/transfer", authCheck, accountController.accountBalanceTransfer);
 module.exports = router;
 
