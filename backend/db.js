@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const url = 'mongodb+srv://fyzanshaik:faizanshaik12@cluster0.1dobvnk.mongodb.net/';
+const url = process.env.MONGODB_URL;
 mongoose
 	.connect(url)
 	.then(() => {
