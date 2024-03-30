@@ -19,7 +19,6 @@ const authMiddleware = async (req, res, next) => {
       return res.status(401).json({ message: "User not found" });
     }
     req.userId = decoded.userId;
-    console.log("Auth cleared")
     next();
   } catch (err) {
     console.error("Authorization failed:", err);

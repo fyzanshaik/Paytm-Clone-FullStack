@@ -10,9 +10,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-	res.send('Get request was made');
-});
+// app.get('/', (req, res) => {
+// 	res.send('Get request was made');
+// });
 
 app.use('/api/v1/', userRoute);
 app.use('/api/v1/account', accountRoute);
