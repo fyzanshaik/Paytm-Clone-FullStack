@@ -1,12 +1,18 @@
-const User = require("../models/User");
-const zod = require("zod");
+import {Request,Response} from "express"
+import {User} from "../models/User"
+import zod from "zod"
+
 const schemaObject = zod.object({
   firstName: zod.string().optional(),
   lastName: zod.string().optional(),
   password: zod.string().optional(),
 });
 
-exports.updateUser = async (req, res) => {
+interface CustomRequest extends Request{
+  userId?: string
+}
+
+export const updateUser = async (req:CustomRequest, res:Response) => {
   const parsedData = schemaObject.safeParse(req.body);
   // console.log('here');
   if (!parsedData.success) {
@@ -14,7 +20,7 @@ exports.updateUser = async (req, res) => {
   }
 
   const { firstName, lastName, password } = parsedData.data;
-  const userId = req.body.userName;
+  const userId:string = req.body.userName;
 
   try {
     const user = await User.findOne({ userName: userId });
@@ -29,7 +35,7 @@ exports.updateUser = async (req, res) => {
 
     await user.save();
 
-    res.status(200).json({ message: "User updated successfully" });
+    res.json({ message: "User updated successfully" });
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -37,28 +43,28 @@ exports.updateUser = async (req, res) => {
 };
 
 
-exports.getUserName = async (req,res) =>{
+export const getUserName = async (req:CustomRequest, res:Response) =>{
   try {
-    res.status(200).json({ userName : req.userId });
+    res.json({ userName : req.userId });
   } catch (error) {
     console.error("Error finding user:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 }
 
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req:CustomRequest, res:Response) => {
   try {
     const users = await User.find();
     const index = users.findIndex(item => item.userName === req.userId);
     users.splice(index,1);
-    res.status(200).json({ ALL_USERS: users });
+    res.json({ ALL_USERS: users });
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-exports.getUserWithFilter = async (req, res) => {
+export const getUserWithFilter = async (req:CustomRequest, res:Response) => {
   try {
     const filter = req.query.filter;
     console.log(filter);

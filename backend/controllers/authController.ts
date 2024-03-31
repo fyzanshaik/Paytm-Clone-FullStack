@@ -1,10 +1,15 @@
-const User = require("../models/User");
-const Account = require("../models/Account");
-const zod = require("zod");
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config/config");
+import {Request,Response} from "express"
+import {User} from "../models/User"
+import zod from "zod"
+import  {Account} from "../models/Account";
+import jwt  from "jsonwebtoken";
+import JWT_SECRET from "../config/config";
 
-exports.signup = async (req, res) => {
+interface CustomRequest extends Request{
+  userId?: string
+}
+
+export const signup = async (req:CustomRequest, res:Response) => {
   console.log(" SIGNUP HIT");
   const schemaObject = zod.object({
     firstName: zod.string(),
@@ -51,7 +56,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.signin = async (req, res) => {
+export const signin = async (req:CustomRequest, res:Response) => {
   console.log(" SIGNIN HIT")
   const schemaObject = zod.object({
     userName: zod.string(),
@@ -85,3 +90,4 @@ exports.signin = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+

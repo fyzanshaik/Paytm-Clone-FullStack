@@ -43,9 +43,10 @@ const SendMoney = () => {
                             </div>
                             <button onClick={() => {
                                 const token = localStorage.getItem("token")
+                                const amountInInt = parseInt(amount)
                                 axios.post("http://localhost:3000/api/v1/account/transfer", {
                                     to: name,
-                                    amount: amount
+                                    amount: amountInInt
                                 },
                                     {
                                         headers: {
